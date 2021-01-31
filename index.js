@@ -19,6 +19,7 @@ mongoose.connect(connStr, function(err) {
     if (err) throw err;
     console.log('Successfully connected to MongoDB');
 });
+//mongoose.use(baseUser);
 app.use(express.json())
 app.use(bodyParser.json());
 
@@ -29,23 +30,23 @@ app.get('/users', (req,res) => {
 // Ajout d'un nouvelle utilisateur à la liste users si non existant sinon comparasion des mots de passe
 app.post('/users', function (req, res) {
     var donneeUser = req.body;
-    //partie mot de passe
-    /*testUser.save(function (err) {
-        if (err) throw err;
-        User.findOne({email: testUser.email}, function (err, user) {
-            if (err) throw err;
-            user.comparePassword(testUser.password, function (err, isMatch) {
-                if (err) throw err;
-                return res.send("mot de pase bon")
-            });
-        })
-        */
     var newUser = new User({
         nom:donneeUser.nom,
         prenom:donneeUser.prenom,
         email:donneeUser.email,
         password:donneeUser.password
     })
+    //partie mot de passe
+    /*newUser.save(function (err) {
+        if (err) throw err;
+        User.findOne({email: newUser.email}, function (err, user) {
+            if (err) throw err;
+            user.comparePassword(newUser.password, function (err, isMatch) {
+                if (err) throw err;
+                return res.send("mot de pase bon")
+            });
+        })
+    });*/
     users.push(newUser);
     return res.send("l'utilisateur ".concat(newUser.nom).concat(" a été ajouté "));
 });
